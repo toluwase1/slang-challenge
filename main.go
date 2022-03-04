@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"slang/server"
 )
 //var client  *http.Client
@@ -12,7 +11,5 @@ import (
 
 func main() {
 	serve := &server.Server{}
-	fmt.Println("starting server")
 	serve.Start()
-
 }
