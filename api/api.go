@@ -68,20 +68,3 @@ func GetJson(url string, target interface{}) error {
 	return json.NewDecoder(response.Body).Decode(target)
 }
 
-func GetTimeDifference() {
-
-}
-
-//const getTimeDifferenceInSeconds = (start, end) => {
-//const startDate = new Date(start);
-//const endDate = new Date(end);
-//
-//return (endDate - startDate) / 1000;
-//};
-//
-//const createUserSessionActivity = (user) => ({
-//ended_at: user.answered_at,
-//started_at: user.first_seen_at,
-//activity_ids: [user.id],
-//duration_seconds: getTimeDifferenceInSeconds(user.first_seen_at, user.answered_at),
-//});

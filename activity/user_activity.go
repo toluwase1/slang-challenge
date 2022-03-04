@@ -14,6 +14,10 @@ type Activities struct {
 type UserSessions struct {
 	EndedAt string	`json:"ended_at"`
 	StartedAt string `json:"started_at"`
-	ActivityID []int	`json:"activity_id"`
+	ActivityID []int64	`json:"activity_id"`
 	Duration float64 `json:"duration_seconds"`
+}
+
+type Sessions struct {
+	GotSessions map[string][]UserSessions `json:"sessions"`
 }
