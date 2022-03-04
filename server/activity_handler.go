@@ -1,14 +1,46 @@
 package server
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"log"
 	"math"
 	"net/http"
+	"os"
 	"slang/activity"
 	"slang/api"
+	"strings"
 	"time"
 )
+
+//const (
+//UNAUTHORIZED = 401 Unauthorized
+//400 Bad request
+//429 Too many requests (en el caso de ser rate-limited)
+//)
+
+func  PostActivitiesToEndPoint(body []byte) (resp uint, err error) {
+	var bearer = os.Getenv("AUTHORIZATION_HEADER_TOKEN")
+
+	req, err := http.NewRequest("POST", os.Getenv("SEND_BODY"), strings.NewReader(string(body)))
+
+	req.Header.Add("Authorization", bearer)
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		log.Println("error occurred while retrieving activities from the server.\n[ERROR] -", err)
+	}
+
+
+	if response.StatusCode == 204 {
+		return http.StatusNoContent, nil
+	} else if response.StatusCode == 401 {
+		return  http.StatusUnauthorized, nil
+	} else {
+		return http.StatusInternalServerError, nil
+	}
+}
 
 func GetActivities() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -59,6 +91,8 @@ func GetActivities() gin.HandlerFunc {
 				}
 			}
 		}
+		m, err := json.Marshal(&sessions)
+		PostActivitiesToEndPoint(m)
 		c.JSON(http.StatusOK, gin.H{"user_activities": sessions.GotSessions})
 	}
 }

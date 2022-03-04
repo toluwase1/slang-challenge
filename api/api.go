@@ -12,7 +12,7 @@ import (
 
 func FindActivitiesFromApi() (activities *[]activity.Activity, err error) {
 
-	var bearer = "Bearer " + os.Getenv("AUTHORIZATION_HEADER_TOKEN")
+	var bearer = os.Getenv("AUTHORIZATION_HEADER_TOKEN")
 
 	req, err := http.NewRequest("GET", os.Getenv("USER_ACTIVITIES"), nil)
 

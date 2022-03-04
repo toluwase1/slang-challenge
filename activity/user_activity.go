@@ -19,5 +19,5 @@ type UserSessions struct {
 }
 
 type Sessions struct {
-	GotSessions map[string][]UserSessions `json:"sessions"`
+	GotSessions map[string][]UserSessions `json:"user_sessions"`
 }
