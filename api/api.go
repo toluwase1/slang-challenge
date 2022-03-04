@@ -2,24 +2,19 @@ package api
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"slang/activity"
 )
 
-const (
-	USER_ACTIVITIES = "https://api.slangapp.com/challenges/v1/activities/"
-	AUTHORIZATION_HEADER_TOKEN = "MzU6bXpycGdMcVZWL2hhbVdybW8rRjlCVlRTSUdvQ1IycGVKSDJlTnNHcE5ZWT0="
-
-)
 func FindActivitiesFromApi() (activities *[]activity.Activity, err error) {
 
-	var bearer = "Bearer " + AUTHORIZATION_HEADER_TOKEN
+	var bearer = "Bearer " + os.Getenv("AUTHORIZATION_HEADER_TOKEN")
 
-	req, err := http.NewRequest("GET", USER_ACTIVITIES, nil)
+	req, err := http.NewRequest("GET", os.Getenv("USER_ACTIVITIES"), nil)
 
 	req.Header.Add("Authorization", bearer)
 
@@ -47,7 +42,6 @@ func FindActivitiesFromApi() (activities *[]activity.Activity, err error) {
 		log.Println("failed to unmarshal response body from api")
 		return nil, err
 	}
-	fmt.Println(&act.Activities)
 
 	return &act.Activities, err
 }

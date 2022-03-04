@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/joho/godotenv"
 	"slang/server"
 )
 //var client  *http.Client
@@ -10,6 +11,7 @@ import (
 //}
 
 func main() {
+	_ = godotenv.Load()
 	serve := &server.Server{}
 	serve.Start()
 }
